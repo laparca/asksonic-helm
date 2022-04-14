@@ -1,0 +1,27 @@
+annotations:
+  category: Infrastructure
+apiVersion: v2
+appVersion: 1.1.0
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 1.x.x
+description: asksonic is a software to communicate Alexa with subsonic instances.
+engine: gotpl
+home: https://github.com/laparca/ask-sonic
+keywords:
+  - asksonic
+  - http
+  - web
+  - music
+  - alexa
+maintainers:
+  - email: laparca@laparca.es
+    name: Samuel
+name: asksonic
+sources:
+  - https://github.com/laparca/asksonic-docker
+  - https://github.com/srichter/asksonic
+version: 0.1.0
