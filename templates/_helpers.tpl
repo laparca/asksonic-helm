@@ -1,45 +1,45 @@
 {{/* vim: set filetype=mustache: */}}
 {{/*
-Return the proper NGINX image name
+Return the proper asksonic image name
 */}}
-{{- define "nginx.image" -}}
+{{- define "asksonic.image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the proper GIT image name
 */}}
-{{- define "nginx.cloneStaticSiteFromGit.image" -}}
+{{- define "asksonic.cloneStaticSiteFromGit.image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.cloneStaticSiteFromGit.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the proper Prometheus metrics image name
 */}}
-{{- define "nginx.metrics.image" -}}
+{{- define "asksonic.metrics.image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.metrics.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
 Return the proper Docker Image Registry Secret Names
 */}}
-{{- define "nginx.imagePullSecrets" -}}
+{{- define "asksonic.imagePullSecrets" -}}
 {{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.cloneStaticSiteFromGit.image .Values.metrics.image) "global" .Values.global) }}
 {{- end -}}
 
 {{/*
-Return true if a static site should be mounted in the NGINX container
+Return true if a static site should be mounted in the asksonic container
 */}}
-{{- define "nginx.useStaticSite" -}}
+{{- define "asksonic.useStaticSite" -}}
 {{- if or .Values.cloneStaticSiteFromGit.enabled .Values.staticSiteConfigmap .Values.staticSitePVC }}
     {- true -}}
 {{- end -}}
 {{- end -}}
 
 {{/*
-Return the volume to use to mount the static site in the NGINX container
+Return the volume to use to mount the static site in the asksonic container
 */}}
-{{- define "nginx.staticSiteVolume" -}}
+{{- define "asksonic.staticSiteVolume" -}}
 {{- if .Values.cloneStaticSiteFromGit.enabled }}
 emptyDir: {}
 {{- else if .Values.staticSiteConfigmap }}
@@ -52,9 +52,9 @@ persistentVolumeClaim:
 {{- end -}}
 
 {{/*
-Return the custom NGINX server block configmap.
+Return the custom asksonic server block configmap.
 */}}
-{{- define "nginx.serverBlockConfigmapName" -}}
+{{- define "asksonic.serverBlockConfigmapName" -}}
 {{- if .Values.existingServerBlockConfigmap -}}
     {{- printf "%s" (tpl .Values.existingServerBlockConfigmap $) -}}
 {{- else -}}
@@ -65,10 +65,10 @@ Return the custom NGINX server block configmap.
 {{/*
 Compile all warnings into a single message, and call fail.
 */}}
-{{- define "nginx.validateValues" -}}
+{{- define "asksonic.validateValues" -}}
 {{- $messages := list -}}
-{{- $messages := append $messages (include "nginx.validateValues.cloneStaticSiteFromGit" .) -}}
-{{- $messages := append $messages (include "nginx.validateValues.extraVolumes" .) -}}
+{{- $messages := append $messages (include "asksonic.validateValues.cloneStaticSiteFromGit" .) -}}
+{{- $messages := append $messages (include "asksonic.validateValues.extraVolumes" .) -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
 
@@ -77,19 +77,19 @@ Compile all warnings into a single message, and call fail.
 {{- end -}}
 {{- end -}}
 
-{{/* Validate values of NGINX - Clone StaticSite from Git configuration */}}
-{{- define "nginx.validateValues.cloneStaticSiteFromGit" -}}
+{{/* Validate values of asksonic - Clone StaticSite from Git configuration */}}
+{{- define "asksonic.validateValues.cloneStaticSiteFromGit" -}}
 {{- if and .Values.cloneStaticSiteFromGit.enabled (or (not .Values.cloneStaticSiteFromGit.repository) (not .Values.cloneStaticSiteFromGit.branch)) -}}
-nginx: cloneStaticSiteFromGit
+asksonic: cloneStaticSiteFromGit
     When enabling cloing a static site from a Git repository, both the Git repository and the Git branch must be provided.
     Please provide them by setting the `cloneStaticSiteFromGit.repository` and `cloneStaticSiteFromGit.branch` parameters.
 {{- end -}}
 {{- end -}}
 
-{{/* Validate values of NGINX - Incorrect extra volume settings */}}
-{{- define "nginx.validateValues.extraVolumes" -}}
+{{/* Validate values of asksonic - Incorrect extra volume settings */}}
+{{- define "asksonic.validateValues.extraVolumes" -}}
 {{- if and (.Values.extraVolumes) (not (or .Values.extraVolumeMounts .Values.cloneStaticSiteFromGit.extraVolumeMounts)) -}}
-nginx: missing-extra-volume-mounts
+asksonic: missing-extra-volume-mounts
     You specified extra volumes but not mount points for them. Please set
     the extraVolumeMounts value
 {{- end -}}
@@ -98,7 +98,7 @@ nginx: missing-extra-volume-mounts
 {{/*
  Create the name of the service account to use
  */}}
-{{- define "nginx.serviceAccountName" -}}
+{{- define "asksonic.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
     {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}

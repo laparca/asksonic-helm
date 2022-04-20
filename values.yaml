@@ -76,42 +76,42 @@ image:
   ## Enable debug mode
   ##
   debug: false
-## @param replicaCount Number of %%MAIN_CONTAINER_NAME%% replicas to deploy
+## @param replicaCount Number of asksonic replicas to deploy
 ##
 replicaCount: 1
 subSonicUrl: ""
 subSonicUser: ""
 subSonicPassword: ""
 subSonicPort: 443
-subSonicServerPath: "/server"
 #| ``ASKS_SUBSONIC_SERVERPATH`` | The server path of your Subsonic server. Must contain only the path, not the domain. Example: `/path/to/rest` | Default: /rest |
-subSonicApiVer: 1.16.1
+subSonicServerPath: "/server"
 #| ``ASKS_SUBSONIC_APIVERSION`` | The supported API version of your Subsonic server. (Airsonic servers should use version 1.15.0) | Default: 1.16.1 |
-subSonicAppName: py-sonic
+subSonicApiVer: 1.16.1
 #| ``ASKS_SUBSONIC_APPNAME`` | The name of your AskSonic instance | Default: py-sonic |
-askSonicHost: 0.0.0.0
+subSonicAppName: py-sonic
 #| ``ASKS_HOST`` | The host AskSonic's server will listen on | Default: 0.0.0.0 |
-askSonicPort: 4545
+askSonicHost: 0.0.0.0
 #| ``ASKS_PORT`` | The port AskSonic's server will listen on | Default: 4545 or `$PORT` |
-askSonicRoutePrefix: "/alexa"
+askSonicPort: 4545
 #| ``ASKS_ROUTE_PREFIX`` | The endpoint that Alexa will use to communicate with AskSonic. You can obscure your AskSonic instance by customizing this | Default: /alexa |
-askSonicTracksCount: 50
+askSonicRoutePrefix: "/alexa"
 #| ``ASKS_TRACKS_COUNT`` | The number of tracks enqueued at a time | Default: 50 |
-askSonicExtraSecret: ""
+askSonicTracksCount: 50
 #| ``ASKS_EXTRA_SECRET`` | An extra secret that will be appended to all requests as either a header or to the query string. Useful for authenticating requests if your Subsonic server is behind a WAF such as Cloudflare | ❌ |
-askSonicLang: en
+askSonicExtraSecret: ""
 #| ``ASKS_LANG`` | Language to use for Alexa. | Default: en |
+askSonicLang: en
 
 
-## @param containerPorts.http %%MAIN_CONTAINER_NAME%% HTTP container port
-## @param containerPorts.https %%MAIN_CONTAINER_NAME%% HTTPS container port
+## @param containerPorts.http asksonic HTTP container port
+## @param containerPorts.https asksonic HTTPS container port
 ##
 containerPorts:
   http: 80
   https: 443
-## Configure extra options for %%MAIN_CONTAINER_NAME%% containers' liveness and readiness probes
+## Configure extra options for asksonic containers' liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
-## @param livenessProbe.enabled Enable livenessProbe on %%MAIN_CONTAINER_NAME%% containers
+## @param livenessProbe.enabled Enable livenessProbe on asksonic containers
 ## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
 ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
 ## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
@@ -119,13 +119,13 @@ containerPorts:
 ## @param livenessProbe.successThreshold Success threshold for livenessProbe
 ##
 livenessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: foo
   periodSeconds: bar
   timeoutSeconds: foo
   failureThreshold: bar
   successThreshold: foo
-## @param readinessProbe.enabled Enable readinessProbe on %%MAIN_CONTAINER_NAME%% containers
+## @param readinessProbe.enabled Enable readinessProbe on asksonic containers
 ## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
 ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
 ## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
@@ -133,13 +133,13 @@ livenessProbe:
 ## @param readinessProbe.successThreshold Success threshold for readinessProbe
 ##
 readinessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: foo
   periodSeconds: bar
   timeoutSeconds: foo
   failureThreshold: bar
   successThreshold: foo
-## @param startupProbe.enabled Enable startupProbe on %%MAIN_CONTAINER_NAME%% containers
+## @param startupProbe.enabled Enable startupProbe on asksonic containers
 ## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
 ## @param startupProbe.periodSeconds Period seconds for startupProbe
 ## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
@@ -162,28 +162,28 @@ customReadinessProbe: {}
 ## @param customStartupProbe Custom startupProbe that overrides the default one
 ##
 customStartupProbe: {}
-## %%MAIN_CONTAINER_NAME%% resource requests and limits
+## asksonic resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-## @param resources.limits The resources limits for the %%MAIN_CONTAINER_NAME%% containers
-## @param resources.requests The requested resources for the %%MAIN_CONTAINER_NAME%% containers
+## @param resources.limits The resources limits for the asksonic containers
+## @param resources.requests The requested resources for the asksonic containers
 ##
 resources:
   limits: {}
   requests: {}
 ## Configure Pods Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-## @param podSecurityContext.enabled Enabled %%MAIN_CONTAINER_NAME%% pods' Security Context
-## @param podSecurityContext.fsGroup Set %%MAIN_CONTAINER_NAME%% pod's Security Context fsGroup
+## @param podSecurityContext.enabled Enabled asksonic pods' Security Context
+## @param podSecurityContext.fsGroup Set asksonic pod's Security Context fsGroup
 ##
 podSecurityContext:
   enabled: true
   fsGroup: 1001
 ## Configure Container Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-## @param containerSecurityContext.enabled Enabled %%MAIN_CONTAINER_NAME%% containers' Security Context
-## @param containerSecurityContext.runAsUser Set %%MAIN_CONTAINER_NAME%% containers' Security Context runAsUser
-## @param containerSecurityContext.runAsNonRoot Set %%MAIN_CONTAINER_NAME%% containers' Security Context runAsNonRoot
-## @param containerSecurityContext.readOnlyRootFilesystem Set %%MAIN_CONTAINER_NAME%% containers' Security Context runAsNonRoot
+## @param containerSecurityContext.enabled Enabled asksonic containers' Security Context
+## @param containerSecurityContext.runAsUser Set asksonic containers' Security Context runAsUser
+## @param containerSecurityContext.runAsNonRoot Set asksonic containers' Security Context runAsNonRoot
+## @param containerSecurityContext.readOnlyRootFilesystem Set asksonic containers' Security Context runAsNonRoot
 ##
 containerSecurityContext:
   enabled: true
@@ -193,7 +193,7 @@ containerSecurityContext:
 
 #%%OTHER_PARAMETERS_RELATED_TO_THIS_CONTAINER/POD%%
 
-## @param existingConfigmap The name of an existing ConfigMap with your custom configuration for %%MAIN_CONTAINER_NAME%%
+## @param existingConfigmap The name of an existing ConfigMap with your custom configuration for asksonic
 ##
 existingConfigmap:
 ## @param command Override default container command (useful when using custom images)
@@ -202,15 +202,15 @@ command: []
 ## @param args Override default container args (useful when using custom images)
 ##
 args: []
-## @param hostAliases %%MAIN_CONTAINER_NAME%% pods host aliases
+## @param hostAliases asksonic pods host aliases
 ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 ##
 hostAliases: []
-## @param podLabels Extra labels for %%MAIN_CONTAINER_NAME%% pods
+## @param podLabels Extra labels for asksonic pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##
 podLabels: {}
-## @param podAnnotations Annotations for %%MAIN_CONTAINER_NAME%% pods
+## @param podAnnotations Annotations for asksonic pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##
 podAnnotations: {}
@@ -263,20 +263,20 @@ nodeAffinityPreset:
   ##   - e2e-az2
   ##
   values: []
-## @param affinity Affinity for %%MAIN_CONTAINER_NAME%% pods assignment
+## @param affinity Affinity for asksonic pods assignment
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ## NOTE: `podAffinityPreset`, `podAntiAffinityPreset`, and `nodeAffinityPreset` will be ignored when it's set
 ##
 affinity: {}
-## @param nodeSelector Node labels for %%MAIN_CONTAINER_NAME%% pods assignment
+## @param nodeSelector Node labels for asksonic pods assignment
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
 nodeSelector: {}
-## @param tolerations Tolerations for %%MAIN_CONTAINER_NAME%% pods assignment
+## @param tolerations Tolerations for asksonic pods assignment
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 tolerations: []
-## @param updateStrategy.type %%MAIN_CONTAINER_NAME%% statefulset strategy type
+## @param updateStrategy.type asksonic statefulset strategy type
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
 ##
 updateStrategy:
@@ -291,14 +291,14 @@ updateStrategy:
 ##
 podManagementPolicy: OrderedReady
 
-## @param priorityClassName %%MAIN_CONTAINER_NAME%% pods' priorityClassName
+## @param priorityClassName asksonic pods' priorityClassName
 ##
 priorityClassName: ""
 ## @param topologySpreadConstraints Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods
 ##
 topologySpreadConstraints: {}
-## @param schedulerName Name of the k8s scheduler (other than default) for %%MAIN_CONTAINER_NAME%% pods
+## @param schedulerName Name of the k8s scheduler (other than default) for asksonic pods
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
 schedulerName: ""
@@ -306,29 +306,29 @@ schedulerName: ""
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 ##
 terminationGracePeriodSeconds: ""
-## @param lifecycleHooks for the %%MAIN_CONTAINER_NAME%% container(s) to automate configuration before or after startup
+## @param lifecycleHooks for the asksonic container(s) to automate configuration before or after startup
 ##
 lifecycleHooks: {}
-## @param extraEnvVars Array with extra environment variables to add to %%MAIN_CONTAINER_NAME%% nodes
+## @param extraEnvVars Array with extra environment variables to add to asksonic nodes
 ## e.g:
 ## extraEnvVars:
 ##   - name: FOO
 ##     value: "bar"
 ##
 extraEnvVars: []
-## @param extraEnvVarsCM Name of existing ConfigMap containing extra env vars for %%MAIN_CONTAINER_NAME%% nodes
+## @param extraEnvVarsCM Name of existing ConfigMap containing extra env vars for asksonic nodes
 ##
 extraEnvVarsCM: ""
-## @param extraEnvVarsSecret Name of existing Secret containing extra env vars for %%MAIN_CONTAINER_NAME%% nodes
+## @param extraEnvVarsSecret Name of existing Secret containing extra env vars for asksonic nodes
 ##
 extraEnvVarsSecret: ""
-## @param extraVolumes Optionally specify extra list of additional volumes for the %%MAIN_CONTAINER_NAME%% pod(s)
+## @param extraVolumes Optionally specify extra list of additional volumes for the asksonic pod(s)
 ##
 extraVolumes: []
-## @param extraVolumeMounts Optionally specify extra list of additional volumeMounts for the %%MAIN_CONTAINER_NAME%% container(s)
+## @param extraVolumeMounts Optionally specify extra list of additional volumeMounts for the asksonic container(s)
 ##
 extraVolumeMounts: []
-## @param sidecars Add additional sidecar containers to the %%MAIN_CONTAINER_NAME%% pod(s)
+## @param sidecars Add additional sidecar containers to the asksonic pod(s)
 ## e.g:
 ## sidecars:
 ##   - name: your-image-name
@@ -339,7 +339,7 @@ extraVolumeMounts: []
 ##         containerPort: 1234
 ##
 sidecars: {}
-## @param initContainers Add additional init containers to the %%MAIN_CONTAINER_NAME%% pod(s)
+## @param initContainers Add additional init containers to the asksonic pod(s)
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 ## e.g:
 ## initContainers:
@@ -350,26 +350,17 @@ sidecars: {}
 ##
 initContainers: {}
 
-## %%SECONDARY_CONTAINER/POD_DESCRIPTION%%
-##
-%%SECONDARY_OBJECT_BLOCK%%:
-  %%SAME_STRUCTURE_AS_THE_MAIN_CONTAINER/POD%%
-
-## %%OTHERS_CONTAINER/POD_DESCRIPTION%%
-##
-%%OTHER_OBJECT_BLOCK%%:
-  %%SAME_STRUCTURE_AS_THE_MAIN_CONTAINER/POD%%
 
 ## @section Traffic Exposure Parameters
 
-## %%MAIN_CONTAINER_NAME%% service parameters
+## asksonic service parameters
 ##
 service:
-  ## @param service.type %%MAIN_CONTAINER_NAME%% service type
+  ## @param service.type asksonic service type
   ##
   type: LoadBalancer
-  ## @param service.ports.http %%MAIN_CONTAINER_NAME%% service HTTP port
-  ## @param service.ports.https %%MAIN_CONTAINER_NAME%% service HTTPS port
+  ## @param service.ports.http asksonic service HTTP port
+  ## @param service.ports.https asksonic service HTTPS port
   ##
   ports:
     http: 80
@@ -382,30 +373,30 @@ service:
   nodePorts:
     http: ""
     https: ""
-  ## @param service.clusterIP %%MAIN_CONTAINER_NAME%% service Cluster IP
+  ## @param service.clusterIP asksonic service Cluster IP
   ## e.g.:
   ## clusterIP: None
   ##
   clusterIP: ""
-  ## @param service.loadBalancerIP %%MAIN_CONTAINER_NAME%% service Load Balancer IP
+  ## @param service.loadBalancerIP asksonic service Load Balancer IP
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
   ##
   loadBalancerIP: ""
-  ## @param service.loadBalancerSourceRanges %%MAIN_CONTAINER_NAME%% service Load Balancer sources
+  ## @param service.loadBalancerSourceRanges asksonic service Load Balancer sources
   ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
   ## e.g:
   ## loadBalancerSourceRanges:
   ##   - 10.10.10.0/24
   ##
   loadBalancerSourceRanges: []
-  ## @param service.externalTrafficPolicy %%MAIN_CONTAINER_NAME%% service external traffic policy
+  ## @param service.externalTrafficPolicy asksonic service external traffic policy
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   ##
   externalTrafficPolicy: Cluster
-  ## @param service.annotations Additional custom annotations for %%MAIN_CONTAINER_NAME%% service
+  ## @param service.annotations Additional custom annotations for asksonic service
   ##
   annotations: {}
-  ## @param service.extraPorts Extra ports to expose in %%MAIN_CONTAINER_NAME%% service (normally used with the `sidecars` value)
+  ## @param service.extraPorts Extra ports to expose in asksonic service (normally used with the `sidecars` value)
   ##
   extraPorts: []
   ## @param service.sessionAffinity Control where client requests go, to the same pod or round-robin
@@ -419,11 +410,11 @@ service:
   ##     timeoutSeconds: 300
   ##
   sessionAffinityConfig: {}
-## %%MAIN_CONTAINER_NAME%% ingress parameters
+## asksonic ingress parameters
 ## ref: http://kubernetes.io/docs/user-guide/ingress/
 ##
 ingress:
-  ## @param ingress.enabled Enable ingress record generation for %%MAIN_CONTAINER_NAME%%
+  ## @param ingress.enabled Enable ingress record generation for asksonic
   ##
   enabled: false
   ## @param ingress.pathType Ingress path type
@@ -434,7 +425,7 @@ ingress:
   apiVersion: ""
   ## @param ingress.hostname Default host for the ingress record
   ##
-  hostname: %%COMPONENT_NAME%%.local
+  hostname: asksonic.local
   ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
   ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
@@ -467,7 +458,7 @@ ingress:
   ## @param ingress.extraHosts An array with additional hostname(s) to be covered with the ingress record
   ## e.g:
   ## extraHosts:
-  ##   - name: %%COMPONENT_NAME%%.local
+  ##   - name: asksonic.local
   ##     path: /
   ##
   extraHosts: []
@@ -485,8 +476,8 @@ ingress:
   ## e.g:
   ## extraTls:
   ## - hosts:
-  ##     - %%COMPONENT_NAME%%.local
-  ##   secretName: %%COMPONENT_NAME%%.local-tls
+  ##     - asksonic.local
+  ##   secretName: asksonic.local-tls
   ##
   extraTls: []
   ## @param ingress.secrets Custom TLS certificates as secrets
@@ -498,7 +489,7 @@ ingress:
   ## Please see README.md for more information
   ## e.g:
   ## secrets:
-  ##   - name: %%COMPONENT_NAME%%.local-tls
+  ##   - name: asksonic.local-tls
   ##     key: |-
   ##       -----BEGIN RSA PRIVATE KEY-----
   ##       ...
@@ -692,8 +683,3 @@ metrics:
     ##   prometheus: my-prometheus
     ##
     selector: {}
-## %%SUBCHART_CONTAINER/POD_DESCRIPTION%%
-##
-%%SUBCHART_NAME%%:
-  enabled: false
-  %%OTHER_PARAMETERS_RELATED_TO_THIS_SUBCHART%%
