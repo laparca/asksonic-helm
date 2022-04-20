@@ -6,7 +6,8 @@ metadata:
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
-  {{- if or .Values.service.annotations .Values.commonAnnotations (and .Values.metrics.enabled .Values.metrics.service.annotations) }}
+#  {{- if or .Values.service.annotations .Values.commonAnnotations (and .Values.metrics.enabled .Values.metrics.service.annotations) }}
+  {{- if or .Values.service.annotations .Values.commonAnnotations }}
   annotations:
     {{- if .Values.service.annotations }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.service.annotations "context" $) | nindent 4 }}
@@ -14,9 +15,9 @@ metadata:
     {{- if .Values.commonAnnotations }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
-    {{- if and .Values.metrics.enabled .Values.metrics.service.annotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.metrics.service.annotations "context" $) | nindent 4 }}
-    {{- end }}
+#    {{- if and .Values.metrics.enabled .Values.metrics.service.annotations }}
+#    {{- include "common.tplvalues.render" ( dict "value" .Values.metrics.service.annotations "context" $) | nindent 4 }}
+#    {{- end }}
   {{- end }}
 spec:
   type: {{ .Values.service.type }}
