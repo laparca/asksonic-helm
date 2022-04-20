@@ -24,31 +24,7 @@ Return the proper Prometheus metrics image name
 Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "asksonic.imagePullSecrets" -}}
-{{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.cloneStaticSiteFromGit.image .Values.metrics.image) "global" .Values.global) }}
-{{- end -}}
-
-{{/*
-Return true if a static site should be mounted in the asksonic container
-*/}}
-{{- define "asksonic.useStaticSite" -}}
-{{- if or .Values.cloneStaticSiteFromGit.enabled .Values.staticSiteConfigmap .Values.staticSitePVC }}
-    {- true -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Return the volume to use to mount the static site in the asksonic container
-*/}}
-{{- define "asksonic.staticSiteVolume" -}}
-{{- if .Values.cloneStaticSiteFromGit.enabled }}
-emptyDir: {}
-{{- else if .Values.staticSiteConfigmap }}
-configMap:
-  name: {{ printf "%s" (tpl .Values.staticSiteConfigmap $) -}}
-{{- else if .Values.staticSitePVC }}
-persistentVolumeClaim:
-  claimName: {{ printf "%s" (tpl .Values.staticSitePVC $) -}}
-{{- end }}
+{{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.metrics.image) "global" .Values.global) }}
 {{- end -}}
 
 {{/*
