@@ -74,8 +74,6 @@ spec:
             - -c
             - /entrypoint.sh
           env:
-            - name: BITNAMI_DEBUG
-              value: {{ ternary "true" "false" (or .Values.image.debug .Values.diagnosticMode.enabled) | quote }}
             - name: ASKS_SUBSONIC_URL
               value: {{ .Values.subSonicUrl }}
             - name: ASKS_SUBSONIC_USER
@@ -110,7 +108,7 @@ spec:
           {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.askSonic.port }}
+              containerPort: {{ .Values.askSonicPort }}
 #              containerPort: {{/* .Values.containerPorts.http */}}
 #            - name: https
 #              containerPort: {{/* .Values.containerPorts.https */}}

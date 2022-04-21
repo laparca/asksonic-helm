@@ -2,7 +2,7 @@
 Return the proper asksonic image name
 */}}
 {{- define "asksonic.image" -}}
-{{ include "common.images.image" (dict "imageRoot" .Values.asksonic.image "global" .Values.global) }}
+{{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
@@ -16,7 +16,7 @@ Return the proper image name (for the init container volume-permissions image)
 Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "asksonic.imagePullSecrets" -}}
-{{- include "common.images.pullSecrets" (dict "images" (list .Values.asksonic.image .Values.volumePermissions.image) "global" .Values.global) -}}
+{{- include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.volumePermissions.image) "global" .Values.global) -}}
 {{- end -}}
 
 {{/*
@@ -24,7 +24,7 @@ Create the name of the service account to use
 */}}
 {{- define "asksonic.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (printf "%s-foo" (include "common.names.fullname" .)) .Values.serviceAccount.name }}
+    {{ default (printf "%s-sa" (include "common.names.fullname" .)) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}

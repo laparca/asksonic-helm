@@ -25,7 +25,7 @@ spec:
   {{- end }}
   ports:
     - name: http
-      port: {{ .Values.service.port }}
+      port: {{ .Values.service.ports.http }}
       {{- if .Values.service.targetPort }}
       targetPort: {{ .Values.service.targetPort.http }}
       {{- end }}
@@ -34,7 +34,7 @@ spec:
       {{- end }}
     {{- if .Values.containerPorts.https }}
     - name: https
-      port: {{ .Values.service.httpsPort }}
+      port: {{ .Values.service.ports.https }}
       {{- if .Values.service.targetPort }}
       targetPort: {{ .Values.service.targetPort.https }}
       {{- end }}
