@@ -59,7 +59,7 @@ extraDeploy: []
 image:
   registry: docker.io
   repository: laparca/asksonic
-  tag: 0.1.0
+  tag: 0.1
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -108,7 +108,7 @@ askSonicLang: en
 ##
 containerPorts:
   http: 80
-  https: 443
+#  https: 443
 ## Configure extra options for asksonic containers' liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param livenessProbe.enabled Enable livenessProbe on asksonic containers

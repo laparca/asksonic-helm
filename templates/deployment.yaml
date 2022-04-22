@@ -70,36 +70,36 @@ spec:
           securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
           command:
-            - /bin/bash
-            - -c
-            - /entrypoint.sh
+            - "/bin/bash"
+            - "-c"
+            - "/entrypoint.sh"
           env:
             - name: ASKS_SUBSONIC_URL
-              value: {{ .Values.subSonicUrl }}
+              value: {{ .Values.subSonicUrl | quote }}
             - name: ASKS_SUBSONIC_USER
-              value: {{ .Values.subSonicUser }}
+              value: {{ .Values.subSonicUser | quote }}
             - name: ASKS_SUBSONIC_PASS
-              value: {{ .Values.subSonicPassword }}
+              value: {{ .Values.subSonicPassword | quote }}
             - name: ASKS_SUBSONIC_PORT
-              value: {{ .Values.subSonicPort }}
+              value: {{ .Values.subSonicPort | quote }}
             - name: ASKS_SUBSONIC_SERVERPATH
-              value: {{ .Values.subSonicServerPath }}
+              value: {{ .Values.subSonicServerPath | quote }}
             - name: ASKS_SUBSONIC_APIVERSION
-              value: {{ .Values.subSonicApiVer }}
+              value: {{ .Values.subSonicApiVer | quote }}
             - name: ASKS_SUBSONIC_APPNAME
-              value: {{ .Values.subSonicAppName }}
+              value: {{ .Values.subSonicAppName | quote }}
             - name: ASKS_HOST
-              value: {{ .Values.askSonicHost }}
+              value: {{ .Values.askSonicHost | quote }}
             - name: ASKS_PORT
-              value: {{ .Values.askSonicPort }}
+              value: {{ .Values.askSonicPort | quote }}
             - name: ASKS_ROUTE_PREFIX
-              value: {{ .Values.askSonicRoutePrefix }}
+              value: {{ .Values.askSonicRoutePrefix | quote }}
             - name: ASKS_TRACKS_COUNT
-              value: {{ .Values.askSonicTracksCount }}
+              value: {{ .Values.askSonicTracksCount | quote }}
             - name: ASKS_EXTRA_SECRET
-              value: {{ .Values.askSonicExtraSecret }}
+              value: {{ .Values.askSonicExtraSecret | quote }}
             - name: ASKS_LANG
-              value: {{ .Values.askSonicLang }}
+              value: {{ .Values.askSonicLang | quote }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
